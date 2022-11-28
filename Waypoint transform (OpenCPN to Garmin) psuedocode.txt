@@ -1,0 +1,61 @@
+GPX waypoint transform
+Perl psuedo-code
+
+transform OpenCPN waypoint export to Garmin-compatible USERDATA.GPX
+
+1 - drop OpenCPN header, add Garmin header
+	2 tags:
+		<?xml version="1.0"?>  
+			==> <?xml version="1.0" encoding="UTF-8" ?>
+
+		<gpx version="1.1" creator="OpenCPN" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd" xmlns:opencpn="http://www.opencpn.org">
+			==> <gpx creator="GPSMAP 942" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:uuidx="http://www.garmin.com/xmlschemas/IdentifierExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/WaypointExtension/v1 http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/IdentifierExtension/v1 http://www.garmin.com/xmlschemas/IdentifierExtension.xsd">
+
+2 - <metadata> node (Garmin-side only) is possibly not necessary
+3 - <wpt> tag moves cleanly (no transform)
+4 - <time> & <name> nodes move cleanly
+5 - <desc> becomes <cmt>
+6 - <sym> tags should be modified:
+	a - known Garmin values include:
+		Anchor
+		Boat Ramp
+		Bridge
+		Caution
+		Diamond, Yellow
+		Fishing Area
+		Flag, Green
+		Marina
+		Pin, Blue
+		Pin, Green
+		Pin, Red
+		Triangle, Red
+		Waypoint
+	b - Many more possible values in the OpenCPN GPX.  Some, in fact need to be fixed up (e.g., Symbol-Glow-[anycolor] needs to be 1_Symbol-Glow-[anycolor])
+	c - proposed rule:
+		.*Anchor.* => Anchor
+		.*Bridge.* => Bridge
+		.*Hazard.* => Caution
+		.*wreck.* => Caution
+		.*Marina.* => Marina
+		.*Symbol-Diamond-.* => Diamond, Blue
+		.*Information.* => Diamond, Green
+		.*Service.* => Diamond, Red
+		.*mooring.* => Diamond, Yellow
+		.*Pin,.* => Pin, Blue
+		.*Symbol-Glow-.* => Pin, Green
+		.*Symbol-Star.* => Pin, Red
+		.*Symbol-Spot.* => Pin, Yellow
+		.*Symbol-X-Large-Red.* => Triangle, Red
+		.*Symbol-Exclamation-.* =>  Flag, Red
+	below are no transform:
+		.*Flag, Green.* => Flag, Green
+		.*Boat Ramp.* => Boat Ramp
+		.*Fishing Area.* => Fishing Area
+		.*Waypoint.* => Waypoint
+7 - drop <type>
+8 - add in <extensions> node:
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+            </gpxx:WaypointExtension>
+9 - change label/name "<opencpn:guid>" to "<uuidx:uuid>" (and closing)
+10 - drop all other opencpn extensions

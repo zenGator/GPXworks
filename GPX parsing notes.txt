@@ -1,0 +1,106 @@
+Garmin card
+	FAT32
+	8gb
+	
+	3 root dirs:
+		Garmin
+		Raymarine
+		SysVolInfo
+	plus Lighthouse_id.txt:  
+		!RAYMARINE LIGHTHOUSE MEDIA ID FILE
+		d59bf35e4831cb92e46488aed0530322ad1636e1becd3a7e6d456b347a55ef84
+		
+	Garmin dir files:
+		ActiveCaptainCard.dat
+		GarminDevice.xml
+		
+	Garmin dir folders:
+		acdb: ActiveCaptain, dated 2022.09.27
+		OneChart: 17 GMP files, 4 others, all dated 2002.09.28
+		OTAUpdates:  empty
+		UserData: USERDATA.GPX (transferred to laptop for processing)
+		
+
+USERDATA.GPX
+2022.11.24
+
+structure:
+	waypoints first:  <wpt></wpt>
+	
+	then routes:  <rte></rte>
+	
+	then tracks:  <trk></trk>
+		(last will be "ACTIVE LOG")
+			
+	each track will lead with name and extension that provides color:
+		<name>ACTIVE LOG</name>
+        <extensions>
+            <gpxx:TrackExtension>
+                <gpxx:DisplayColor>Magenta</gpxx:DisplayColor>
+            </gpxx:TrackExtension>
+        </extensions>
+		
+	then will be several track segments:  <trkseg></trkseg>
+		each of those are made of track points which have position, some also have timestamps:
+			<trkpt lat="27.5235667638" lon="-82.6319158450">
+                <time>2022-11-24T20:01:24Z</time>
+            </trkpt>
+
+Transform by import/export from OpenCPN:
+	adds own <gpx > data
+	can add description: <desc></desc>
+	extensions include:
+		<opencpn:guid>32ec0000-bd13-4cdc-8ac6-8769020a0000</opencpn:guid>
+		<opencpn:viz>1</opencpn:viz>
+		<opencpn:start>SIBW, slip 91</opencpn:start>
+		<opencpn:end>Cortez, R/T</opencpn:end>
+		<opencpn:style width="8" />
+		<gpxx:TrackExtension>
+			<gpxx:DisplayColor>Magenta</gpxx:DisplayColor>
+		</gpxx:TrackExtension>
+		
+	use date/time to track between OpenCPN displayed route and GPX
+	remove time idling at anchor and in slip
+	add following to description:
+		associated waypoints (including GUID)
+		source (e.g., USERDATA.GPX and chartplotter)
+		rawtrack name (location inherent)
+		final track path (should be in "fixed up tracks")
+		
+Adding "fixed up" to name within OpenCPN, but not necessarily saving with that; after all are fixed, will delete that indicator
+
+
+
+If deleting waypoints (for cleanup), export routes first to keep from breaking if any waypoints are used within the route.
+
+
+Waypoints:
+	Garmin export includes date/time within a metadata node
+	Garmin waypoint nodes include:
+		<time>2020-04-19T18:59:11Z</time>
+        <name>ANCH 1228</name>
+		<cmt>7FT BELOW KEEL</cmt>
+        <sym>Waypoint</sym>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:Depth>10.35</gpxx:Depth>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+            </gpxx:WaypointExtension>
+            <uuidx:uuid>05962a2c-8eae-4593-9ce0-9c83292dac2e</uuidx:uuid>
+        </extensions>
+		
+		only observed DisplayMode is "SymbolAndName"
+		
+	OpenCPN waypoint nodes include the same, plus:
+		<desc>Good spot to aim for when coming into marina, Snead Island Boat Works</desc>
+		<type>WPT</type>
+	
+	within extensions, OpenCPN does NOT have the gpxx, it DOES have:
+		      <opencpn:guid>263e0000-c101-44c4-b510-17c86dbbffff</opencpn:guid>
+      <opencpn:viz_name>1</opencpn:viz_name>
+      <opencpn:shared>1</opencpn:shared>
+      <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+      <opencpn:waypoint_range_rings visible="true" number="3" step="0.100000001" units="0" colour="#00FF40" />
+      <opencpn:scale_min_max UseScale="true" ScaleMin="2147483646" ScaleMax="0" />
+
+	

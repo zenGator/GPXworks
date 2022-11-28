@@ -1,0 +1,72 @@
+a: waypoints first:  <wpt *>*</wpt>
+b: routes come next:  <rte><name>*</name></rte>
+c: then tracks: <trk><name>*</name></trk> (lat/lon only)
+	1: final track has name of ACTIVE LOG; this contains date/time along with lat/lon
+	2: in active log: <trkseg><trkpt *><time>*</time>*</trkseg>
+
+Steps
+1 - Delete all from </metadata> to <trk> // <name>ACTIVE LOG</name>
+2 - Each <trkseg> should generally correspond to one day
+	a. Delete </trkseg><trkseg> between intra-day breaks
+3 - Insert <trk><name>*<extensions>*</trk> in front of each day
+	a. For multi-day trips, if using alternating colors, no spaces, e.g., "DarkCyan"
+	b. Name should start with "YYYYMMDD "
+	c. add within <extensions>:
+		    <opencpn:viz>1</opencpn:viz>
+			<opencpn:style width="8" />
+
+Consider also using PoSh, where once the file is imported as an XML document, various blocks (entities?) can be handled as objects (dot-notation).
+See C:\Users\lawrence\bin\lasTrip.ps1
+
+Raw, as of 2019.11.10:
+ACTIVE LOG
+
+These tracks can be deleted from the Chartplotter
+
+<time>2019-03-17T21:17:47Z</time>
+<time>2019-03-17T21:22:03Z</time>
+<time>2019-03-17T21:28:01Z</time>
+<time>2019-05-19T12:53:01Z</time>
+<time>2019-05-20T16:06:03Z</time>
+<time>2019-07-05T15:00:01Z</time>
+<time>2019-07-06T01:52:01Z</time>
+<time>2019-07-07T12:18:00Z</time>
+<time>2019-11-03T02:22:31Z</time>
+<time>2019-11-03T15:23:31Z</time>
+<time>2019-11-04T12:25:25Z</time>
+<time>2019-11-05T11:57:01Z</time>
+<time>2019-11-06T11:19:55Z</time>
+<time>2019-11-08T12:05:55Z</time>
+<time>2019-11-09T12:07:31Z</time>
+<time>2019-11-09T20:08:49Z</time>
+<time>2019-11-09T23:49:31Z</time>
+<time>2019-11-10T00:47:31Z</time>
+
+        <name>07-JUL-19</name>
+        <name>10-NOV-19</name>
+        <name>10-NOV-19 02</name>
+        <name>10-NOV-19 03</name>
+        <name>18.08.25_Ft.Pierce-R</name>
+        <name>18.09.27_Riviera Bea</name>
+        <name>19.02.16_Hollywood-B</name>
+        <name>19.02.19_intoBrowns </name>
+        <name>track segs.gpx</name>
+
+
+These routes can be deleted from the Chartplotter.  They are also in "C:\opt\Garmin data 20191110\UserData\Coconut Grove to Marco Island-20191110.GPX"
+
+        <name>0007-FL R </name>
+        <name>0013-BROWNS MAR</name>
+        <name>18.02.17_Jax to</name>
+        <name>18.04.14_StAug-</name>
+        <name>18.04.20_NewSmy</name>
+        <name>18.06.30_Canave</name>
+        <name>19.02.16_Bimini</name>
+        <name>Bimini-Honeymoo</name>
+        <name>Down the Keys</name>
+        <name>Hollywood-Miami</name>
+        <name>KeyWest to Main</name>
+        <name>SABLE2MARCO</name>
+        <name>Stream Effect f</name>
+
+and probably all waypoints as well
