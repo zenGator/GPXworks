@@ -11,6 +11,32 @@ Fixup:
 Pull track names (list of saved tracks so that some can be deleted)
 	use xtractrack.pl for this:  will list either routes (-r) or tracks (-t)
 
+Forms:
+	for oCPN:
+		<trk>
+		  <name>foo</name>
+		  <extensions>
+		    <opencpn:guid>[automagic]</opencpn:guid>
+		    <opencpn:viz>1</opencpn:viz>  #1=true, visible
+		    <gpxx:TrackExtension>
+			<gpxx:DisplayColor>Red|Blue|Green|Yellow</gpxx:DisplayColor>
+		    </gpxx:TrackExtension>
+		  </extensions>
+		  <trkseg>
+
+	for RayMarine:
+		<trk>
+		  <name>foo</name>
+		  <extensions>
+		    <raymarine:TrackExtension>
+			<raymarine:Colour>Red|Blue|Green|Yellow</raymarine:Colour>
+			<raymarine:GUID>[automagic]</raymarine:GUID>
+		    </raymarine:TrackExtension>
+		  </extensions>
+		  <trkseg>
+
+
+
 NB:  names should be standardized:   YYMMDD_[descript]
 NB:  Remove the fixup tags to import into OpenCPN
 
