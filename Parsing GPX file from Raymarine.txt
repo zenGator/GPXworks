@@ -9,10 +9,12 @@ Fixup:
 	3. then <Tracks> (<trk>)
 
 Pull track names (list of saved tracks so that some can be deleted)
+	use xtractrack.pl for this:  will list either routes (-r) or tracks (-t)
 
 NB:  names should be standardized:   YYMMDD_[descript]
 NB:  Remove the fixup tags to import into OpenCPN
 
+====
 ====
 Below is relevant to the Garmin
 ====
