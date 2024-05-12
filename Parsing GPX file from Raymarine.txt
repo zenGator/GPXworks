@@ -37,7 +37,8 @@ Forms:
 
 
 
-NB:  names should be standardized:   YYMMDD_[descript]
+NB:  names should be standardized:   [Voyage]: YYMMDD_[descript (from-to|dest)]
+	e.g., Panhandle24: 240407_SIBW-Anclote
 NB:  Remove the fixup tags to import into OpenCPN
 
 ====
@@ -48,7 +49,7 @@ a: waypoints first:  <wpt *>*</wpt>
 b: routes come next:  <rte><name>*</name></rte>
 c: then tracks: <trk><name>*</name></trk> (lat/lon only)
 	1: final track has name of ACTIVE LOG; this contains date/time along with lat/lon
-	2: in active log: <trkseg><trkpt *><time>*</time>*</trkseg>
+	2: in active log: <trkseg><trkpt lon="[#]" lat="[#]"><time>*</time>*</trkseg>
 
 Steps
 1 - Delete all from </metadata> to <trk> // <name>ACTIVE LOG</name>
