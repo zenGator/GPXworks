@@ -36,6 +36,8 @@ Forms:
 		  <trkseg>
 
 
+extract point/depth/temp data from RayMarine track as tab-delimited file:
+	awk -v RS= '{gsub("\r\n ","");gsub("<trkpt lon=\"","\n")};1' SpenceRock_data.txt |awk '{gsub("\" lat=\"","\t");gsub("\">   <extensions>    <raymarine:TrackPointExtension>     <raymarine:WaterDepth>","\t");gsub("</raymarine:WaterDepth>     <raymarine:WaterTemp>","\t");gsub("</raymarine:WaterTemp>    </raymarine:TrackPointExtension>   </extensions>  </trkpt>","\t")}; {printf "%20.14f\t%20.14f\t%4.2f\t%6.2f\n", $1,$2,$3,$4} '
 
 NB:  names should be standardized:   [Voyage]: YYMMDD_[descript (from-to|dest)]
 	e.g., Panhandle24: 240407_SIBW-Anclote
