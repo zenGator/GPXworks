@@ -1,0 +1,7 @@
+!/bin/bash
+# prep inreach to find/select trkpt and time for splicing
+# gets rid of elevation, fix, and description tags
+awk -v RS=">\r\n *<trkpt" -v ORS=">\n\t  <trkpt" '{
+      sub(/\r\n *<ele>[-.0-9]*<\/ele>\r\n *<time>/,"<time>", $0);
+      sub(/\r\n *<desc \/>\r\n *<fix>none<\/fix>\r\n */,"",$0);print;
+    }' "$infi" > tmp &&  cp "$infi" "$infi"~ && mv tmp "$infi"
