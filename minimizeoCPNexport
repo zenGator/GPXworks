@@ -1,0 +1,6 @@
+#!/bin/bash
+#
+awk -v RS="\n\n" -v ORS="\n" '{
+  gsub(/>\n[^<]*<time>/,"><time>");
+  gsub(/<\/time>\n[^<]*/,"</time>");
+  print;}' "$infi" > tmp && cp "$infi" "$infi"~ && mv tmp "$infi"
