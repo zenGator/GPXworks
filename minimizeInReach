@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 # prep inreach to find/select trkpt and time for splicing
 # gets rid of elevation, fix, and description tags
 awk -v RS=">\r\n *<trkpt" -v ORS=">\n\t  <trkpt" '{
