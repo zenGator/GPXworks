@@ -2,5 +2,4 @@
 # adds the name of the track to the line with the <trk> tag, to help with collapsing
 
 awk -v RS="pqp" -v ORS="" '{out=gensub(/<trk>\
-n *<name>([^<]*)<\/name>/, "<trk>\\1\n  <name>\\1</name>","g");print out; }' ../Tracks_as_of_20230325.gpx > Tracks_as_of_20230325.
-gpx
+n *<name>([^<]*)<\/name>/, "<trk>\\1\n  <name>\\1</name>","g");print out; }' "$infi" > tmp && cp "$infi" "$infi"~ && mv tmp "$infi" 
