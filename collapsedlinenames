@@ -1,5 +1,7 @@
 #!/bin/bash
 # adds the name of the track to the line with the <trk> tag, to help with collapsing
 
-awk -v RS="pqp" -v ORS="" '{out=gensub(/<trk>\
-n *<name>([^<]*)<\/name>/, "<trk>\\1\n  <name>\\1</name>","g");print out; }' "$infi" > tmp && cp "$infi" "$infi"~ && mv tmp "$infi" 
+awk -v RS="pqp" -v ORS="" '{
+out=gensub(/<trk>\n *<name>([^<]*)<\/name>/, "<trk>\\1\n  <name>\\1</name>","g");
+print out; 
+}' "$infi" > tmp && cp "$infi" "$infi"~ && mv tmp "$infi" 
