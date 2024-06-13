@@ -7,7 +7,7 @@ awk 'BEGIN{oldtime=0};
       split(daytime[2],time,":");
       newtime=mktime(sprintf("%s %s %s %s %s %s",date[1],date[2],date[3],time[1],time[2],time[3]));
       delta=newtime-oldtime;
-      if(delta>360){flag="bad"} 
+      if(delta>600 && oldtime>0){flag="bad"} 
         else {flag=""};
       print ((NR-start)/3),rawtime,newtime,delta,flag; 
-      oldtime=newtime}' "$fi"| grep -C2 bad
+      oldtime=newtime}' "$fi" | grep -C2 --color bad
