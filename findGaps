@@ -1,4 +1,5 @@
 awk 'BEGIN{oldtime=0};
+  /<trkseg>/{start=NR-1};
   match($0,/<time>([-0-9:TZ]{20})<\/time>/,m) 
     {rawtime=m[1];split(rawtime,daytime,"T");
       split(daytime[1],date,"-");
@@ -8,5 +9,5 @@ awk 'BEGIN{oldtime=0};
       delta=newtime-oldtime;
       if(delta>360){flag="bad"} 
         else {flag=""};
-      print NR,rawtime,newtime,delta,flag; 
+      print ((NR-start)/3),rawtime,newtime,delta,flag; 
       oldtime=newtime}' "$fi"| grep -C2 bad
