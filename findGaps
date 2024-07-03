@@ -13,5 +13,5 @@ awk 'BEGIN{oldtime=0};
                 delta=newtime-oldtime;
                 if(delta>600 && oldtime>0){flag="bad"}
                         else {flag=""};
-                print ((NR-start)/3),rawtime,newtime,delta,flag; oldtime=newtime
-        }' "$1" | grep -C2 --color bad
+                print ((NR-start)/3)-1,rawtime,newtime,delta,flag; oldtime=newtime
+        };END{print "last line is "((NR-start-4)/3)-1;};' "$1" | grep -C2 --color bad
