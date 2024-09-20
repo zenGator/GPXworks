@@ -1,5 +1,8 @@
 #!/bin/bash
+#zG:
 #
+# puts entire trackpoint node into a single line (no linebreaks before/after time node)
+
 awk -v RS="\n\n" -v ORS="\n" '{
   gsub(/>\n[^<]*<time>/,"><time>");
   gsub(/<\/time>\n[^<]*/,"</time>");
