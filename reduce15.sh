@@ -3,7 +3,7 @@
 # data reduction:  only 1 waypoint per 15 seconds
 
 awk 'BEGIN{oldtime=0}; 
-	match($0,/<time>([-0-9:TZ]{20})<\/time>/,m) {
+	match($0,/<time>([-0-9:.TZ]{20,27})<\/time>/,m) {
 		rawtime=m[1];
 		split(rawtime,daytime,"T"); 
 		split(daytime[1],date,"-"); 
