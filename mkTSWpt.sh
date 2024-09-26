@@ -3,6 +3,9 @@
 #
 # mkTSWpt.sh
 # build waypoints from NOAA hurricane discussion
+#
+# like this:  ./mkTSWpt.sh [discussion.txt] > [stormname_dd/hh00.gpx]
+#
 # fields:
 #	2	time offset
 #	3	timestamp
