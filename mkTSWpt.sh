@@ -18,9 +18,16 @@
 BEGIN{	#there are a couple of fixed lines for the file header
 	print "<?xml version=\"1.0\"?>";
 	print "<gpx version=\"1.1\" creator=\"OpenCPN\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.topografix.com/GPX/1/1\" xmlns:gpxx=\"http://www.garmin.com/xmlschemas/GpxExtensions/v3\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd\" xmlns:opencpn=\"http://www.opencpn.org\">";
+	dir=ENVIRON["PWD"]; 			#need current directory for storm name
+	count=split(dir,nameparts,"/");	#divide path into components, count is the number of parts, 
+									#including the null before the leading separator
+	split(nameparts[count],splitbuff,",");	#assumes we have named the dir "[StormName], [date]"
+	name=splitbuff[1];
 }
-match($0,/^INIT/,m) {			#INIT also identifies which advisory
-	$0=" "$0;					#pre-pend a space so we can treat all lines identically
+#	/^\s*$/ {print "</gpx>";exit;}
+END { print "</gpx>"; }
+	{$0=" "$0};					#pre-pend a space so we can treat all lines identically
+match($0,/^ INIT/,m) {			#INIT also identifies which advisory
 	split($0,myFields," *");	#file/text is multi-space delimited
 	advisory=myFields[3];		#third field is date/time
 }
@@ -37,7 +44,7 @@ match($0,/^INIT/,m) {			#INIT also identifies which advisory
 	split(myFields[3],myTS,"/");							#day/date is first part of timestamp
 	patsplit(myTS[2],myTime,/../);							#insert colon in time component
 	print "\t<time>2024-09-"myTS[1]"T"myTime[1]":"myTime[2]"</time>";
-	print "\t<name>Helene @ "myFields[3]" per "advisory" advisory</name>";
+	print "\t<name>"name" @ "myFields[3]" per "advisory" advisory</name>";
 	mySym="Weather-Tropical-Storm-NH";
 	if (myFields[6] >= 64 ){mySym="Weather-Hurricane-NH"};	#TS is < 64kt wind
 	print "\t<sym>"mySym"</sym>";							#either TS or Hurricane
